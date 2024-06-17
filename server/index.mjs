@@ -14,9 +14,8 @@ const port = 3001;
 app.use(express.json());
 app.use(morgan('dev'));
 
-// Static files serving
-const resourcesDir = path.join(path.resolve(), 'resources');
-app.use('/resources', express.static(resourcesDir));
+// Mi permette di accedere alle foto con http://localhost:3001/resources/x.jpg
+app.use('/resources', express.static("resources"));
 
 // CORS configuration
 const corsOptions = {

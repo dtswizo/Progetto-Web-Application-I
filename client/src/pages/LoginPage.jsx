@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import LoginForm from '../components/LoginForm';
 import './LoginPage.css';
 
+
 const LoginPage = ({ login }) => {
   return (
     <Container fluid className="login-page">
