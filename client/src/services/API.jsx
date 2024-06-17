@@ -45,6 +45,23 @@ const logOut = async() => {
     return null;
 }
 
+async function fetchRoundContent() {
+  try {
+    const response = await fetch(SERVER_URL + '/api/roundcontent', {
+      method: 'GET',
+      credentials: 'include', 
+    });
 
-const API = { logIn, logOut, getUserInfo};
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('There was a problem with the fetch operation:', error);
+  }
+}
+
+const API = { logIn, logOut, getUserInfo, fetchRoundContent};
 export default API;

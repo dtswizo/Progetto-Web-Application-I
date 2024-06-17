@@ -7,6 +7,7 @@ import session from 'express-session';
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
 import { getUser } from './user-dao.mjs';
+import {getMemeAndCaption} from './meme-caption-dao.mjs';
 
 const app = express();
 const port = 3001;
@@ -56,7 +57,7 @@ app.use(passport.session());
 
 
 
-
+//PASSPORT API
 app.post('/api/sessions', function (req, res, next) {
   passport.authenticate('local', (err, user, info) => {
     if (err) return next(err);
@@ -82,6 +83,15 @@ app.delete('/api/sessions/current', (req, res) => {
   req.logout(() => {
     res.end();
   });
+});
+//MEME-CAPTION API
+app.get('/api/roundcontent', async (req, res) => { 
+  try {
+    const data = await getMemeAndCaption(); 
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: 'An error occurred while fetching meme and captions' });
+  }
 });
 
 // Start the server
