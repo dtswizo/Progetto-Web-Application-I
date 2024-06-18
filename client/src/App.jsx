@@ -6,6 +6,8 @@ import GamePage from './pages/GamePage';
 import LoginPage from './pages/LoginPage';
 import NotFound from './pages/NotFound';
 import API from './services/API';
+import './App.css'; 
+ 
 
 function App() {
   const [user, setUser] = useState(null);
@@ -26,23 +28,18 @@ function App() {
     checkAuth();
   }, []);
 
-  const handleLogin = async (credentials) => {
+  const handleLogin = async (user) => {
     try {
-      const user = await API.logIn(credentials);
       setUser(user);
       console.log(user);
     } catch (err) {
       console.error(err);
-      // Gestire l'errore di login
     }
   };
+ 
 
   const handleLogout = async () => {
-    console.log("l'utente");
-    console.log(user);
-    console.log("era loggato");
     await API.logOut();
-    console.log("Adesso è sloggato");
     setUser(null);
     console.log(user);
   };
@@ -55,7 +52,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage user={user} logout={handleLogout}/>} />
         <Route path="/game" element={<GamePage user={user}/>} />
-        <Route path="/login" element={<LoginPage login={handleLogin} />} />
+        <Route path="/login" element={<LoginPage login={handleLogin}/>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
   );

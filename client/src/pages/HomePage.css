@@ -1,58 +1,59 @@
-/* src/pages/HomePage.css */
-body, html {
-    height: 100%;
-    margin: 0;
-    padding: 0; /* Rimuovi anche eventuali padding predefiniti */
-    overflow: hidden;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap'); /* Custom font */
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  box-sizing: border-box;
 }
 
-
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* Prevent scrolling */
+}
 
 .homepage-container {
-    background: url('https://mrwallpaper.com/images/hd/landscape-white-minimalist-d0h9lllw9ds8g39m.jpg') no-repeat center center fixed;
-    background-size: cover;         /* Cover the entire container */
-
-    /* These properties are key to flexible, full-screen layouts */
-    display: flex;                  
-    flex-direction: column;         
-    justify-content: center;        
-    align-items: center;            
-    
-    min-height: 100vh;   /* Ensure container is at least viewport height */ 
-    width: 100vw;       /* Explicitly set width to 100% of viewport */
-    text-align: center; 
-    position: absolute; /* Posiziona l'elemento in modo assoluto */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;        /* Assicura che copra l'intero viewport */
+  width: 100%;
+  height: 100vh; /* Use the entire height of the viewport */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden; /* Prevent scrolling */
 }
-  
-  .title {
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    color: #fff;
-    text-shadow: 2px 2px 4px #000000;
-  }
-  
-  .custom-button {
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    font-size: 1.5rem;
-    padding: 15px 30px;
-    border-radius: 10px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  .custom-button:hover {
-    background-color: #004085;
-    color: #fff;
-  }
-  
-  .custom-button:active {
-    background-color: #002752;
-    color: #fff;
-  }
 
-  .custom-button{
-    margin-left:20px;
-  }
-  
+.homepage-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure the image covers the container */
+  z-index: 0; /* Ensure the image is at the back */
+}
+
+.button-group {
+  z-index: 1; /* Ensure the buttons are above the image */
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Space between buttons */
+}
+
+.custom-button {
+  background-color: #ffd80d; /* Yellow background */
+  border-radius: 20px;
+  border: none;
+  padding: 10px 30px;
+  color: white;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif; /* Apply Poppins font */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative; /* Ensure the button is properly positioned */
+}
+
+.custom-button.secondary {
+  background-color: #6c757d; /* Secondary button color */
+}

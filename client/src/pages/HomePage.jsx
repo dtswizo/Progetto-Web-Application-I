@@ -1,10 +1,10 @@
-// src/pages/HomePage.js
 import React from 'react';
-import { Container, Button, Row, Col } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import './HomePage.css'; // Importiamo il file CSS
+import './HomePage.css'; // Import the CSS file
+import photoBg from '../resources/bg2.jpg';
 
-const HomePage = ({ logout }) => {
+const HomePage = ({ user,logout }) => {
   const navigate = useNavigate();
 
   const startGame = () => {
@@ -15,16 +15,33 @@ const HomePage = ({ logout }) => {
     navigate('/login');
   };
 
+  const handleLogout = () => {
+    // Add your logout logic here
+    console.log('Logged out');
+  };
+
   return (
     <div className="homepage-container">
-      <h1 className="mb-4 title">What do you meme?</h1>
-      <Row>
-        <Col className="d-flex justify-content-around">
-          <Button variant="primary" size="lg" onClick={startGame} className="custom-button">Start Game</Button>
-          <Button variant="secondary" size="lg" onClick={login} className="custom-button">Login</Button>
-          <Button variant="secondary" size="lg" onClick={logout} className="custom-button">Logout</Button>
-        </Col>
-      </Row>
+      <img src={photoBg} alt="Background" />
+      {user ? (
+        <div className="button-group">
+          <Button variant="primary" size="lg" onClick={startGame} className="custom-button">
+            Play
+          </Button>
+          <Button variant="secondary" size="lg" onClick={handleLogout} className="custom-button">
+            Logout
+          </Button>
+        </div>
+      ) : (
+        <div className="button-group">
+          <Button variant="primary" size="lg" onClick={startGame} className="custom-button">
+            Play as a Guest
+          </Button>
+          <Button variant="secondary" size="lg" onClick={login} className="custom-button">
+            Login
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
