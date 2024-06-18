@@ -1,0 +1,117 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .container {
+    width: 90%;
+    max-width: 640px;
+    background: white;
+    color: #262626;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-height: 90vh;
+    overflow: hidden;
+  }
+  
+  .container hr {
+    height: 2px;
+    border: none;
+    background: #707070;
+  }
+  
+  .container h2 {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  .container .meme-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    max-height: 30vh; /* Reduce the height limit of the image */
+    object-fit: contain;
+  }
+  
+  .container ul {
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .container ul li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    padding: 8px;
+    border: 1px solid #686868;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+  }
+  
+  .container ul li:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .container button {
+    margin: auto;
+    width: 150px;
+    height: 40px;
+    background: #553f9a;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .container button:hover {
+    background-color: #452b85;
+  }
+  
+  .container .index {
+    margin: auto;
+    font-size: 14px;
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+      padding: 10px;
+    }
+  
+    .container h2 {
+      font-size: 18px;
+    }
+  
+    .container ul li {
+      font-size: 12px;
+      padding: 6px;
+    }
+  
+    .container button {
+      width: 120px;
+      height: 35px;
+      font-size: 14px;
+    }
+  }
+  

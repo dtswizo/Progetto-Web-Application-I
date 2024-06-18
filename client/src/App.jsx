@@ -7,6 +7,8 @@ import LoginPage from './pages/LoginPage';
 import NotFound from './pages/NotFound';
 import API from './services/API';
 import './App.css'; 
+import Quiz from './pages/Quiz';
+
 
 function App() {
   const [user, setUser] = useState(null);
@@ -54,7 +56,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage loggedIn={loggedIn} user={user} logout={handleLogout} />} />
-      <Route path="/game" element={<GamePage user={user} />} />
+      <Route path="/game" element={<Quiz user={user} />} />
       <Route path='/login' element={
         loggedIn ? <Navigate replace to='/' /> : <LoginPage login={handleLogin} message={message} setMessage={setMessage} />
       } />
