@@ -36,7 +36,7 @@ html, body {
 .button-group {
   z-index: 1; /* Ensure the buttons are above the image */
   display: flex;
-  flex-direction: column;
+  flex-direction: row; /* Align buttons in a row */
   gap: 20px; /* Space between buttons */
 }
 
@@ -44,9 +44,9 @@ html, body {
   background-color: #ffd80d; /* Yellow background */
   border-radius: 20px;
   border: none;
-  padding: 10px 30px;
-  color: white;
-  font-size: 16px;
+  padding: 15px 55px; /* Slightly increase padding */
+  color: #101010;
+  font-size: 25px; /* Increase font size */
   font-family: 'Poppins', sans-serif; /* Apply Poppins font */
   display: inline-flex;
   align-items: center;
@@ -57,3 +57,5 @@ html, body {
 .custom-button.secondary {
   background-color: #6c757d; /* Secondary button color */
 }
+
+

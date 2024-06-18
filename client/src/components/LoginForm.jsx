@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, Form, Button } from 'react-bootstrap';
+import "./LoginForm.css";
 
 function LoginForm(props) {
   const [username, setUsername] = useState('');
@@ -50,9 +51,9 @@ function LoginForm(props) {
         />
       </div>
       <div className="d-grid">
-        <button type="submit" className="btn btn-primary">
+        <Button type="submit" className="custom-button">
           Submit
-        </button>
+        </Button>
       </div>
     </form>
   );

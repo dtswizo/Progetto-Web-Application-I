@@ -3,6 +3,7 @@ import { Container, Row, Col, Button, Alert } from 'react-bootstrap';
 import CaptionsList from '../components/CaptionList';
 import './GamePage.css'; // Import the CSS file
 import API from '../services/API';
+import "./GamePage.css"
 
 const GamePage = ({ user }) => {
   const [meme, setMeme] = useState(null);
