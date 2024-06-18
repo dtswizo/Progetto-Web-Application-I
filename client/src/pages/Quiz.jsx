@@ -30,12 +30,12 @@ const Quiz = () => {
 
   const { meme, rightCaptions, rngCaptions } = roundContent;
 
-  // Combine right captions and random captions, then shuffle them
+  //mischio le caption così le risposte giuste non sono sempre dalla stessa parte
   const captions = [...rightCaptions, ...rngCaptions].sort(() => Math.random() - 0.5);
 
   const handleCaptionClick = (caption) => {
-    setSelectedCaption(caption);
-    if (rightCaptions.some(rc => rc.text === caption.text)) {
+    //setSelectedCaption(caption); //questo causa un re-rendering 
+    if (rightCaptions.some(rc => rc.id === caption.id)) {
       alert("Correct!");
     } else {
       alert("Wrong!");
