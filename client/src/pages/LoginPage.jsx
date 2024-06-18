@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import LoginForm from '../components/LoginForm';
 import './LoginPage.css';
-import photoPlaneBg from '../resources/plane-bg.jpg';
 
 const LoginPage = ({ login, message, setMessage }) => {
   useEffect(() => {
