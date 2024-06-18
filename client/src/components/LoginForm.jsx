@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Alert, Form, Button } from 'react-bootstrap';
 
 function LoginForm(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -13,16 +11,20 @@ function LoginForm(props) {
 
     try {
       await props.login(credentials);
-      navigate('/');
     } catch (err) {
-      setError('Login failed: ' + err.message);
+      props.setMessage({ msg: "Username o password errati", type: 'danger' });
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <h3>Sign In</h3>
-      {error && <div className="alert alert-danger">{error}</div>}
+      {props.message && (
+        <Alert variant={props.message.type} dismissible onClose={() => props.setMessage('')}>
+          <Alert.Heading>{props.message.type === 'danger' ? 'Error' : 'Success'}</Alert.Heading>
+          <p>{props.message.msg}</p>
+        </Alert>
+      )}
       <div className="mb-3">
         <label htmlFor="email">Email address</label>
         <input
@@ -46,18 +48,6 @@ function LoginForm(props) {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-      </div>
-      <div className="mb-3">
-        <div className="form-check">
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="rememberMe"
-          />
-          <label className="form-check-label" htmlFor="rememberMe">
-            Remember me
-          </label>
-        </div>
       </div>
       <div className="d-grid">
         <button type="submit" className="btn btn-primary">

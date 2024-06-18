@@ -7,11 +7,12 @@ import LoginPage from './pages/LoginPage';
 import NotFound from './pages/NotFound';
 import API from './services/API';
 import './App.css'; 
- 
 
 function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false); 
+  const [message, setMessage] = useState(''); 
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -28,20 +29,22 @@ function App() {
     checkAuth();
   }, []);
 
-  const handleLogin = async (user) => {
+  const handleLogin = async (credentials) => {
     try {
+      const user = await API.logIn(credentials);
+      setLoggedIn(true);
+      setMessage({msg: `Welcome, ${user.name}!`, type: 'success'});
       setUser(user);
-      console.log(user);
-    } catch (err) {
-      console.error(err);
+    } catch(err) {
+      setMessage({msg: "Username o password errati", type: 'danger'});
     }
   };
- 
 
   const handleLogout = async () => {
     await API.logOut();
+    setLoggedIn(false);
     setUser(null);
-    console.log(user);
+    setMessage({msg: 'Logged out successfully', type: 'success'}); 
   };
 
   if (loading) {
@@ -49,12 +52,14 @@ function App() {
   }
 
   return (
-      <Routes>
-        <Route path="/" element={<HomePage user={user} logout={handleLogout}/>} />
-        <Route path="/game" element={<GamePage user={user}/>} />
-        <Route path="/login" element={<LoginPage login={handleLogin}/>} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+    <Routes>
+      <Route path="/" element={<HomePage loggedIn={loggedIn} user={user} logout={handleLogout} />} />
+      <Route path="/game" element={<GamePage user={user} />} />
+      <Route path='/login' element={
+        loggedIn ? <Navigate replace to='/' /> : <LoginPage login={handleLogin} message={message} setMessage={setMessage} />
+      } />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 
