@@ -18,7 +18,7 @@ const GamePage = ({ user }) => {
       setMeme(data.meme);
       setRightCaptions(data.rightCaptions);
       setRngCaptions(data.rngCaptions);
-      setError(null); // Clear any previous error
+      setError(null); 
     } catch (error) {
       setError('An error occurred while fetching the meme and captions');
     }
@@ -26,7 +26,7 @@ const GamePage = ({ user }) => {
 
   useEffect(() => {
     fetchRoundContent();
-  }, []); // Fetch round content on component mount
+  }, []); 
 
   const handleNextRound = () => {
     setRound(round + 1);

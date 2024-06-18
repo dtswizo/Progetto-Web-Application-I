@@ -2,3 +2,7 @@
     margin: 0;
 }
 
+body{
+    height: 100vh;
+    background: url("resources/plane-bg.jpg")
+}
