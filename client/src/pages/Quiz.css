@@ -25,7 +25,9 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-height: 90vh;
     overflow: hidden;
-    margin-top:100px;
+    margin-top:60px;
+    margin-bottom:60px;
+    
   }
   
   .container hr {
@@ -116,5 +118,15 @@ body {
       height: 35px;
       font-size: 14px;
     }
+  }
+
+  .correct {
+    background: #dffff2;
+    border-color: #00d397;
+  }
+
+  .wrong {
+    background: #FFEBEB;
+    border-color: #FF4A4A;
   }
   

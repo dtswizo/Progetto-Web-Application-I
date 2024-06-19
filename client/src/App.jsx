@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import HomePage from './pages/HomePage';
-import GamePage from './pages/GamePage';
 import LoginPage from './pages/LoginPage';
 import NotFound from './pages/NotFound';
 import API from './services/API';
