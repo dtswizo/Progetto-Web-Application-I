@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "./Quiz.css";
 import API from '../services/API';
 
-
-const Quiz = () => {
+const Quiz = (props) => {
   const [roundContent, setRoundContent] = useState(null);
   const [error, setError] = useState(null);
   const [currentRound, setCurrentRound] = useState(1);
@@ -12,9 +11,13 @@ const Quiz = () => {
   const [showPopup, setShowPopup] = useState(false);
   const lastClickedRef = useRef(null);
   const intervalRef = useRef(null);
-
+  const isFirstRender = useRef(true); //Serve per risolvere il double render dell'useEffect che 
+                                      //Carica i valori del round
   useEffect(() => {
     const loadRoundContent = async () => {
+      if (currentRound === 1 && props.logged === true) {
+        await API.create_game(props.user.id);
+      }
       try {
         const data = await API.fetchRoundContent();
         if (data) {
@@ -27,7 +30,11 @@ const Quiz = () => {
       }
     };
 
-    loadRoundContent();
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+    } else {
+      loadRoundContent();
+    }
     resetTimer();  //faccio ripartire il timer ogni cambio round
   }, [currentRound]);
 

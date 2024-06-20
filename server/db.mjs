@@ -17,6 +17,28 @@ db.serialize(() => {
   `);
 */
   db.run(`
+    CREATE TABLE IF NOT EXISTS Game_Matches (
+      game_id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER,
+      total_score INTEGER DEFAULT 0,
+      FOREIGN KEY (user_id) REFERENCES user (id) 
+    )
+  `);
+
+  db.run(`
+    CREATE TABLE IF NOT EXISTS Round_Data (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      game_id INTEGER,
+      user_id INTEGER,
+      meme_img TEXT,
+      answer TEXT,
+      is_correct BOOLEAN,
+      FOREIGN KEY(game_id) REFERENCES Game_Matches(game_id),
+      FOREIGN KEY (user_id) REFERENCES user (id) 
+    )
+  `);
+
+  db.run(`
     CREATE TABLE IF NOT EXISTS Memes (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       filename TEXT NOT NULL

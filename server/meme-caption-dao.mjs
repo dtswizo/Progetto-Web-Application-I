@@ -48,4 +48,15 @@ export const getMemeAndCaption = async () => {
       throw err;
     }
   };
-  
+
+  export const create_game = async (user_id) => {
+    return new Promise((resolve, reject) => {
+      db.run(`INSERT INTO game_matches (user_id) VALUES (?)`, [user_id], function (err) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(this.lastID);
+        }
+      });
+    });
+  };

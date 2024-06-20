@@ -55,7 +55,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage loggedIn={loggedIn} user={user} logout={handleLogout} />} />
-      <Route path="/game" element={<Quiz user={user} />} />
+      <Route path="/game" element={<Quiz user={user} logged={loggedIn}/>} />
       <Route path='/login' element={
         loggedIn ? <Navigate replace to='/' /> : <LoginPage login={handleLogin} message={message} setMessage={setMessage} />
       } />

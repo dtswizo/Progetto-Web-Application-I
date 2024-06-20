@@ -63,5 +63,31 @@ async function fetchRoundContent() {
   }
 }
 
-const API = { logIn, logOut, getUserInfo, fetchRoundContent};
+async function create_game(user_id) {
+  try {
+    const response = await fetch(SERVER_URL + '/api/create_game', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include', 
+      body: JSON.stringify({ user_id }), // Passare user_id nel body
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('There was a problem with the fetch operation:', error);
+  }
+};
+
+
+
+
+
+const API = { logIn, logOut, getUserInfo, fetchRoundContent,create_game};
 export default API;
