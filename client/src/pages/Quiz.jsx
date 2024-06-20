@@ -2,12 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import "./Quiz.css";
 import API from '../services/API';
 
+
 const Quiz = () => {
   const [roundContent, setRoundContent] = useState(null);
   const [error, setError] = useState(null);
   const [currentRound, setCurrentRound] = useState(1);
   const [isAnswerSelected, setIsAnswerSelected] = useState(false);
   const [timer, setTimer] = useState(30);
+  const [showPopup, setShowPopup] = useState(false);
   const lastClickedRef = useRef(null);
   const intervalRef = useRef(null);
 
@@ -53,11 +55,12 @@ const Quiz = () => {
     if (lastClickedRef.current) {
       lastClickedRef.current.classList.remove('correct', 'wrong');
     }
-    
+
     if (roundContent.rightCaptions.some(rc => rc.id === caption.id)) {
       event.target.classList.add('correct');
     } else {
       event.target.classList.add('wrong');
+      setShowPopup(true);
     }
 
     lastClickedRef.current = event.target;
@@ -90,25 +93,54 @@ const Quiz = () => {
 
   return (
     <div className='container'>
-      <h1>Quiz App</h1>
-      <hr />
-      <h2>Which caption matches this meme?</h2>
-      <img src={`http://localhost:3001/resources/${meme.filename}`} alt="Meme" className="meme-image" />
-      <ul>
-        {captions.map((caption, index) => (
-          <li
-            key={index}
-            onClick={(event) => handleCaptionClick(event, caption)}
-          >
-            {caption.text}
-          </li>
-        ))}
-      </ul>
+      <h1>Gioco dei Memes</h1>
+      <div className='container-wrapper'>
+      <div className='container-domanda'>
+        <div className='domanda'>
+          <h2>Quale didascalia è più adatta al meme?</h2>
+          <div className='memeImg'>
+          <img src={`http://localhost:3001/resources/${meme.filename}`} alt="Meme" className="meme-image" />
+          </div>
+        </div>
+        <div className='container-risposte'>
+        <ul className='risposte'>
+          {captions.map((caption, index) => (
+            <li
+              key={index}
+              onClick={(event) => handleCaptionClick(event, caption)}
+            >
+              {caption.text}
+            </li>
+          ))}
+        </ul>
+        </div>
+        </div>
+      </div>
       <button onClick={handleNextClick} disabled={!isAnswerSelected}>Avanti</button>
       <div className="index">{currentRound} di 3 domande</div>
       <div className="timer">Tempo rimasto: {timer}s</div>
+      {showPopup && (
+      <Popup
+        correctAnswers={roundContent.rightCaptions}
+        onClose={() => setShowPopup(false)}
+      />
+    )}
     </div>
   );
 };
+
+const Popup = ({ correctAnswers, onClose }) => (
+  <div className="popup-overlay">
+    <div className="popup">
+      <h2>Risposte Corrette</h2>
+      <ul>
+        {correctAnswers.map((answer, index) => ( /*il popup è scalabile anche in caso di aggiunta di più di 2 risposte corrette*/
+          <li key={index}>{answer.text}</li>
+        ))}
+      </ul>
+      <button onClick={onClose}>Chiudi</button>
+    </div>
+  </div>
+);
 
 export default Quiz;

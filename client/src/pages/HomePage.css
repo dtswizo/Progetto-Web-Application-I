@@ -3,24 +3,24 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-family: Poppins, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   box-sizing: border-box;
 }
 
 html, body {
   width: 100%;
   height: 100%;
-  overflow: hidden; /* Prevent scrolling */
+  overflow: hidden; 
 }
 
 .homepage-container {
   width: 100%;
-  height: 100vh; /* Use the entire height of the viewport */
+  height: 100vh; 
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  overflow: hidden; /* Prevent scrolling */
+  overflow: hidden; 
 }
 
 .homepage-container img {
@@ -29,33 +29,33 @@ html, body {
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Ensure the image covers the container */
-  z-index: 0; /* Ensure the image is at the back */
+  object-fit: cover; 
+  z-index: 0; 
 }
 
 .button-group {
-  z-index: 1; /* Ensure the buttons are above the image */
+  z-index: 1; 
   display: flex;
-  flex-direction: row; /* Align buttons in a row */
-  gap: 20px; /* Space between buttons */
+  flex-direction: row; 
+  gap: 20px; 
 }
 
 .custom-button {
-  background-color: #ffd80d; /* Yellow background */
+  background-color: #ffd80d; 
   border-radius: 20px;
   border: none;
-  padding: 15px 55px; /* Slightly increase padding */
+  padding: 15px 55px; 
   color: #101010;
-  font-size: 25px; /* Increase font size */
-  font-family: 'Poppins', sans-serif; /* Apply Poppins font */
+  font-size: 25px; 
+  font-family: 'Poppins', sans-serif; 
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  position: relative; /* Ensure the button is properly positioned */
+  position: relative; 
 }
 
 .custom-button.secondary {
-  background-color: #6c757d; /* Secondary button color */
+  background-color: #6c757d;
 }
 
 
