@@ -10,6 +10,7 @@ const Quiz = (props) => {
   const [isAnswerSelected, setIsAnswerSelected] = useState(false);
   const [timer, setTimer] = useState(30);
   const [showPopup, setShowPopup] = useState(false);
+  const [summaryData,setSummaryData] = useState([]);
   const lastClickedRef = useRef(null);
   const intervalRef = useRef(null);
   const isFirstRender = useRef(true); //Serve per risolvere il double render dell'useEffect che carica i valori del round
@@ -20,7 +21,6 @@ const Quiz = (props) => {
     const loadRoundContent = async () => {
       if (currentRound === 1 && props.logged === true) {
         const res=await API.create_game(props.user.id);
-        console.log(res);
         setMatchId(res.game_id);
       }
       try {
@@ -69,6 +69,13 @@ const Quiz = (props) => {
     }
     const isCorrect = roundContent.rightCaptions.some(rc => rc.id === caption.id);
     if (isCorrect) {
+      setSummaryData(prevSummaryData => [
+        ...prevSummaryData,
+        {
+          answer: caption.text,
+          memeImg: roundContent.meme.filename
+        }
+      ]);
       event.target.classList.add('correct');     
     } else {
       event.target.classList.add('wrong');
@@ -78,7 +85,6 @@ const Quiz = (props) => {
     lastClickedRef.current = event.target;
     setIsAnswerSelected(true);
     await API.add_round(matchId, props.user.id, roundContent.meme.filename, caption.text, isCorrect);
-    console.log("arriva qui");
   };
 
   const handleNextClick = () => {
@@ -90,7 +96,8 @@ const Quiz = (props) => {
       }
       resetTimer();
     } else {
-      alert("Quiz Finished!");
+      console.log(summaryData);
+      alert("quiz finished");
       clearInterval(intervalRef.current);
     }
   };
