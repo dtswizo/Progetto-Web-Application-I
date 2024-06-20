@@ -3,6 +3,7 @@ import "./Quiz.css";
 import API from '../services/API';
 
 const Quiz = (props) => {
+  const [matchId,setMatchId]=useState(null);
   const [roundContent, setRoundContent] = useState(null);
   const [error, setError] = useState(null);
   const [currentRound, setCurrentRound] = useState(1);
@@ -11,12 +12,16 @@ const Quiz = (props) => {
   const [showPopup, setShowPopup] = useState(false);
   const lastClickedRef = useRef(null);
   const intervalRef = useRef(null);
-  const isFirstRender = useRef(true); //Serve per risolvere il double render dell'useEffect che 
-                                      //Carica i valori del round
+  const isFirstRender = useRef(true); //Serve per risolvere il double render dell'useEffect che carica i valori del round
+
+
   useEffect(() => {
+                                      //
     const loadRoundContent = async () => {
       if (currentRound === 1 && props.logged === true) {
-        await API.create_game(props.user.id);
+        const res=await API.create_game(props.user.id);
+        console.log(res);
+        setMatchId(res.game_id);
       }
       try {
         const data = await API.fetchRoundContent();
@@ -56,15 +61,15 @@ const Quiz = (props) => {
     }, 1000);
   };
 
-  const handleCaptionClick = (event, caption) => {
+  const handleCaptionClick = async (event, caption) => {
     if (isAnswerSelected) return;
     clearInterval(intervalRef.current);
     if (lastClickedRef.current) {
       lastClickedRef.current.classList.remove('correct', 'wrong');
     }
-
-    if (roundContent.rightCaptions.some(rc => rc.id === caption.id)) {
-      event.target.classList.add('correct');
+    const isCorrect = roundContent.rightCaptions.some(rc => rc.id === caption.id);
+    if (isCorrect) {
+      event.target.classList.add('correct');     
     } else {
       event.target.classList.add('wrong');
       setShowPopup(true);
@@ -72,6 +77,8 @@ const Quiz = (props) => {
 
     lastClickedRef.current = event.target;
     setIsAnswerSelected(true);
+    await API.add_round(matchId, props.user.id, roundContent.meme.filename, caption.text, isCorrect);
+    console.log("arriva qui");
   };
 
   const handleNextClick = () => {

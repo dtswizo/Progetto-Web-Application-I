@@ -60,3 +60,15 @@ export const getMemeAndCaption = async () => {
       });
     });
   };
+
+  export const add_round = async (game_id,user_id,meme_img,answer,is_correct) => {
+    return new Promise((resolve, reject) => {
+      db.run(`INSERT INTO Round_Data (game_id,user_id,meme_img,answer,is_correct) VALUES (?, ?, ?, ?, ?)`, [game_id,user_id,meme_img,answer,is_correct], function (err) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
+    });
+  };

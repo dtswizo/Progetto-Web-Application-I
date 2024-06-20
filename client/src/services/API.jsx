@@ -85,9 +85,30 @@ async function create_game(user_id) {
   }
 };
 
+async function add_round(game_id,user_id,meme_img,answer,is_correct) {
+  try {
+    const response = await fetch(SERVER_URL + '/api/add_round', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include', 
+      body: JSON.stringify({ game_id,user_id,meme_img,answer,is_correct }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('There was a problem with the fetch operation:', error);
+  }
+};
 
 
 
 
-const API = { logIn, logOut, getUserInfo, fetchRoundContent,create_game};
+const API = { logIn, logOut, getUserInfo, fetchRoundContent,create_game, add_round};
 export default API;
