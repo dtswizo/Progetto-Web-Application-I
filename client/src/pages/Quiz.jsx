@@ -13,6 +13,7 @@ const Quiz = (props) => {
   const [showPopup, setShowPopup] = useState(false);
   const [summaryData, setSummaryData] = useState([]);
   const [intervalId, setIntervalId] = useState(null);
+  const [usedMemes, setUsedMemes] = useState([]); // Evito doppioni
   let firstLoad=false;
   const navigate = useNavigate(); 
 
@@ -41,11 +42,13 @@ const Quiz = (props) => {
       setMatchId(res.game_id);
     }
     try {
-      const data = await API.fetchRoundContent();
+      const data = await API.fetchRoundContent(usedMemes);
       if (data) {
-        const { rightCaptions, rngCaptions } = data;
+        const { meme,rightCaptions, rngCaptions } = data;
         const shuffledCaptions = [...rightCaptions, ...rngCaptions].sort(() => Math.random() - 0.5);
-        setRoundContent({ ...data, captions: shuffledCaptions });
+        setUsedMemes(prevUsedMemes => [...prevUsedMemes, meme.id]); // Gestione meme doppioni
+        setRoundContent({ ...data, captions: shuffledCaptions });  
+        console.log(usedMemes);
       }
     } catch (error) {
       setError(error.message);

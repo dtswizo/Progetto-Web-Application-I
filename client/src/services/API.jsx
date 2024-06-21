@@ -45,11 +45,12 @@ const logOut = async() => {
     return null;
 }
 
-async function fetchRoundContent() {
+async function fetchRoundContent(usedMemeIds) {
+  const query = `usedMemeIds=${usedMemeIds.join('&')}`;
   try {
-    const response = await fetch(SERVER_URL + '/api/roundcontent', {
+    const response = await fetch(`${SERVER_URL}/api/roundcontent?${query}`, {
       method: 'GET',
-      credentials: 'include', 
+      credentials: 'include',
     });
 
     if (!response.ok) {
