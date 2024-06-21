@@ -7,7 +7,8 @@ import NotFound from './pages/NotFound';
 import API from './services/API';
 import './App.css'; 
 import Quiz from './pages/Quiz';
-
+import Profile from './pages/Profile';
+import Summary from './pages/Summary';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -59,6 +60,7 @@ function App() {
       <Route path='/login' element={
         loggedIn ? <Navigate replace to='/' /> : <LoginPage login={handleLogin} message={message} setMessage={setMessage} />
       } />
+       <Route path="/summary" element={<Summary/>} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
