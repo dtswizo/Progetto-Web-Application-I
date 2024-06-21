@@ -26,6 +26,7 @@ const Quiz = (props) => {
       if (intervalId) clearInterval(intervalId);
     };
   }
+  firstLoad=false;
   }, [currentRound]);
 
   useEffect(() => {
