@@ -10,8 +10,8 @@ const Summary = () => {
     // Gestione del caso in cui non ci siano dati di riepilogo
     return <div className="summary-container">Nessun dato di riepilogo disponibile.</div>;
   }
-
   const { summaryData } = state;
+  const score = summaryData.length * 5; // Calcola il punteggio
 
   return (
     <div className='summary-container'>
@@ -24,6 +24,7 @@ const Summary = () => {
           <div className='summary-answer'>Risposta: {item.answer}</div>
         </div>
       ))}
+      <div className='summary-score'>Punteggio: {score}</div> 
       <div className='summary-btn-container'>
         <Link to='/' className='summary-link'>Torna alla homepage</Link>
       </div>
