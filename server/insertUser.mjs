@@ -33,9 +33,9 @@ const insertUser = async (id,email, name, password) => {
 };
 
 // Inserisci qui i dati dell'utente che vuoi aggiungere
-const email = 'davide@polito.it';
-const name = 'Davide Licitra';
-const password = 'test';
-const id = 4;
+const email = 'prova@polito.it';
+const name = 'prova';
+const password = 'prova';
+const id = 5;
 
 insertUser(id,email, name, password);

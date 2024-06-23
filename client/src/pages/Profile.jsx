@@ -52,24 +52,26 @@ const Profile = () => {
   const historyByGame = groupByGameId(history);
 
   return (
-    <div>
+    <div className="profile-container">
       <h2>User Game History</h2>
-      {Object.keys(historyByGame).map((gameId) => (
-        <div key={gameId} className="game-history">
-          <h3>Game ID: {gameId}</h3>
-          <p>Total Score: {historyByGame[gameId][0].total_score}</p>
-          <div className="rounds">
-            {historyByGame[gameId].map((round) => (
-              <div key={round.id} className="round">
-                <img src={`http://localhost:3001/resources/${round.meme_img}`} alt="Meme" />
-                <p>Answer: {round.answer}</p>
-                <p>Score: {round.round_score}</p>
-                <p>{round.is_correct ? 'Correct' : 'Incorrect'}</p>
-              </div>
-            ))}
+      <div className="games-container"> {/* Nuovo contenitore per lo scorrimento */}
+        {Object.keys(historyByGame).map((gameId) => (
+          <div key={gameId} className="game-row"> {/* Riga per ogni partita */}
+            <h3>Game ID: {gameId}</h3>
+            <p>Total Score: {historyByGame[gameId][0].total_score}</p>
+            <div className="rounds">
+              {historyByGame[gameId].map((round) => (
+                <div key={round.id} className="round">
+                  <img src={`http://localhost:3001/resources/${round.meme_img}`} alt="Meme" />
+                  {/* Mostra solo informazioni essenziali per risparmiare spazio */}
+                  <p>Score: {round.round_score}</p> 
+                  <p>{round.is_correct ? 'Correct' : 'Incorrect'}</p>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };
