@@ -110,13 +110,12 @@ async function add_round(game_id,user_id,meme_img,answer,is_correct) {
 
 async function fetchHistory(user_id) {
   try {
-    const response = await fetch(`${SERVER_URL}/api/history`, {
+    const response = await fetch(`${SERVER_URL}/api/history?user_id=${user_id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
       credentials: 'include',
-      body: JSON.stringify({ user_id }), 
     });
 
     if (!response.ok) {
@@ -127,7 +126,7 @@ async function fetchHistory(user_id) {
     return data;
   } catch (error) {
     console.error('There was a problem with the fetch operation:', error);
-    throw error; 
+    throw error;
   }
 }
 

@@ -15,6 +15,10 @@ const HomePage = ({ user,logout,loggedIn }) => {
     navigate('/login');
   };
 
+  const goToProfile = () => {
+    navigate('/profile', { state: { user } });
+  };
+
 
 
   return (
@@ -27,6 +31,9 @@ const HomePage = ({ user,logout,loggedIn }) => {
           </Button>
           <Button variant="secondary" size="lg" onClick={logout} className="custom-button">
             Logout
+          </Button>
+          <Button variant="primary" size="lg" onClick={goToProfile} className="custom-button">
+            Profile
           </Button>
         </div>
       ) : (

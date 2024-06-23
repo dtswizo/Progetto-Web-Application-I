@@ -122,7 +122,7 @@ app.post('/api/add_round', async (req, res) => {
 });
 
 app.get('/api/history', async (req, res) => {
-  const user_id = req.body.user_id;
+  const user_id = req.query.user_id; 
   try {
     const data = await fetch_user_data(user_id);
     res.json(data);
