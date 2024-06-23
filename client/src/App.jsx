@@ -61,6 +61,7 @@ function App() {
         loggedIn ? <Navigate replace to='/' /> : <LoginPage login={handleLogin} message={message} setMessage={setMessage} />
       } />
        <Route path="/summary" element={<Summary/>} />
+       <Route path="/profile" element={<Profile user={user}/>} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

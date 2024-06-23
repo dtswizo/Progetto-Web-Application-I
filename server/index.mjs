@@ -7,7 +7,7 @@ import session from 'express-session';
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
 import { getUser } from './user-dao.mjs';
-import {getMemeAndCaption,create_game,add_round} from './meme-caption-dao.mjs';
+import {getMemeAndCaption,create_game,add_round, fetch_user_data} from './meme-caption-dao.mjs';
 
 const app = express();
 const port = 3001;
@@ -118,6 +118,16 @@ app.post('/api/add_round', async (req, res) => {
     res.status(201).json({success: true});
   } catch (error) {
     res.status(500).json({success: false, error: error.message });
+  }
+});
+
+app.get('/api/history', async (req, res) => {
+  const user_id = req.body.user_id;
+  try {
+    const data = await fetch_user_data(user_id);
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: 'An error occurred while fetching meme and captions' });
   }
 });
 

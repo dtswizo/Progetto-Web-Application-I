@@ -108,8 +108,31 @@ async function add_round(game_id,user_id,meme_img,answer,is_correct) {
   }
 };
 
+async function fetchHistory(user_id) {
+  try {
+    const response = await fetch(`${SERVER_URL}/api/history`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({ user_id }), 
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('There was a problem with the fetch operation:', error);
+    throw error; 
+  }
+}
 
 
 
-const API = { logIn, logOut, getUserInfo, fetchRoundContent,create_game, add_round};
+
+const API = { logIn, logOut, getUserInfo, fetchRoundContent,create_game, add_round, fetchHistory};
 export default API;
