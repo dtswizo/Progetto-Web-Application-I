@@ -4,7 +4,7 @@ import "./Quiz.css";
 import API from '../services/API';
 
 const Quiz = (props) => {
-  const [matchId, setMatchId] = useState(null);
+  const [matchId, setMatchId] = useState(-1);
   const [roundContent, setRoundContent] = useState(null);
   const [error, setError] = useState(null);
   const [currentRound, setCurrentRound] = useState(1);
@@ -13,20 +13,20 @@ const Quiz = (props) => {
   const [showPopup, setShowPopup] = useState(false);
   const [summaryData, setSummaryData] = useState([]);
   const [intervalId, setIntervalId] = useState(null);
-  let firstLoad=false;
-  const navigate = useNavigate(); 
+  let firstLoad = false;
+  const navigate = useNavigate();
 
 
   useEffect(() => {
-    if(firstLoad===false){
-    loadRoundContent();
-    resetTimer();
-    firstLoad=true;
-    return () => {
-      if (intervalId) clearInterval(intervalId);
-    };
-  }
-  firstLoad=false;
+    if (firstLoad === false) {
+      loadRoundContent();
+      resetTimer();
+      firstLoad = true;
+      return () => {
+        if (intervalId) clearInterval(intervalId);
+      };
+    }
+    firstLoad = false;
   }, [currentRound]);
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const Quiz = (props) => {
   };
 
   const handleCaptionClick = async (event, caption) => {
-    firstLoad=false;
+    firstLoad = false;
     if (isAnswerSelected) return;
     if (intervalId) clearInterval(intervalId);
     const isCorrect = roundContent.rightCaptions.some(rc => rc.id === caption.id); //controllo se la risposta è giusta
@@ -76,17 +76,19 @@ const Quiz = (props) => {
         }
       ]);
     }
-    else{
+    else {
       event.target.classList.add('wrong');
       setShowPopup(true); //se la risposta è errata devo mostrare il popup con le risposte giuste
-    } 
+    }
     setIsAnswerSelected(true);
     await API.add_round(matchId, props.user.id, roundContent.meme.filename, caption.text, isCorrect);//aggiungere try/catch? 
   };
 
   const handleNextClick = () => {
+    if(props.logged===false)
+      navigate("/"); //se sta giocando un guest dopo il primo round viene mandato alla home
     document.querySelectorAll('.risposte li').forEach(element => {
-    element.classList.remove('correct', 'wrong');
+      element.classList.remove('correct', 'wrong');
     });  //resetto il css dalle risposte ogni fine round
     if (currentRound < 3) {
       setCurrentRound(currentRound + 1);
@@ -133,8 +135,10 @@ const Quiz = (props) => {
           </div>
         </div>
       </div>
-      <button onClick={handleNextClick} disabled={!isAnswerSelected}>Avanti</button>
-      <div className="index">{currentRound} di 3 domande</div>
+      <button onClick={handleNextClick} disabled={!isAnswerSelected}>{props.logged ? 'Avanti' : 'Fine'}</button>
+      <div className="index">
+      {props.logged ? `${currentRound} di 3 domande` : '1 di 1 domanda'}
+      </div>
       <div className="timer">Tempo rimasto: {timer}s</div>
       {showPopup && (
         <Popup
