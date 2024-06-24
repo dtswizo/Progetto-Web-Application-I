@@ -7,7 +7,7 @@ import session from 'express-session';
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
 import { getUser } from './user-dao.mjs';
-import {getMemeAndCaption,create_game,add_round, fetch_user_data} from './meme-caption-dao.mjs';
+import {getMemeAndCaption,create_game,add_round, fetch_user_data, update_score} from './meme-caption-dao.mjs';
 
 const app = express();
 const port = 3001;
@@ -135,6 +135,17 @@ app.get('/api/history', async (req, res) => {
     res.status(500).json({ error: 'An error occurred while fetching history' });
   }
 });
+
+app.patch('/api/update_score', async (req, res) => {
+  const { score, game_id } = req.body;
+  try {
+    const result = await update_score(score, game_id);
+    res.status(201).json({success: true});
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
 // Start the server
 app.listen(port, () => {

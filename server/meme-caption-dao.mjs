@@ -93,3 +93,14 @@ export const fetch_user_data = async (user_id) => {
   });
 };
 
+export const update_score = (score,game_id) => {
+  return new Promise ((resolve,reject) => {
+    const sql= "UPDATE Game_Matches SET total_score=? WHERE game_id=?";
+    db.run(sql,[score,game_id], (err,new_score) => {
+      if(err)
+        reject(err);
+      else
+      resolve(new_score);
+    });
+  });
+};

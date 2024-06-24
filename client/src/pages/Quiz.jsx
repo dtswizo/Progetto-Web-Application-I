@@ -84,7 +84,7 @@ const Quiz = (props) => {
     await API.add_round(matchId, props.user.id, roundContent.meme.filename, caption.text, isCorrect);//aggiungere try/catch? 
   };
 
-  const handleNextClick = () => {
+  const handleNextClick = async () => {
     if(props.logged===false)
       navigate("/"); //se sta giocando un guest dopo il primo round viene mandato alla home
     document.querySelectorAll('.risposte li').forEach(element => {
@@ -94,7 +94,7 @@ const Quiz = (props) => {
       setCurrentRound(currentRound + 1);
       setIsAnswerSelected(false);
     } else {
-      console.log(summaryData);
+      await API.updateScore(summaryData.length*5,matchId);
       navigate('/summary', { state: { summaryData } });
       if (intervalId) clearInterval(intervalId);
     }

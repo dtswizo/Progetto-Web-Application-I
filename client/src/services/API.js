@@ -114,8 +114,26 @@ async function fetchHistory(user_id) {
   }
 }
 
+async function updateScore(score, game_id) {
+  const response = await fetch(SERVER_URL + '/api/update_score', {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include', 
+    body: JSON.stringify({ score, game_id }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+
+  const data = await response.json();
+  return data;
+}
 
 
 
-const API = { logIn, logOut, getUserInfo, fetchRoundContent,create_game, add_round, fetchHistory};
+
+const API = { logIn, logOut, getUserInfo, fetchRoundContent,create_game, add_round, fetchHistory, updateScore };
 export default API;

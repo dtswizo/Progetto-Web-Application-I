@@ -19,7 +19,7 @@ function LoginForm(props) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h3>Sign In</h3>
+      <h3>Accedi</h3>
       {props.message && (
         <Alert variant={props.message.type} dismissible onClose={() => props.setMessage('')}>
           <Alert.Heading>{props.message.type === 'danger' ? 'Error' : 'Success'}</Alert.Heading>
@@ -27,12 +27,12 @@ function LoginForm(props) {
         </Alert>
       )}
       <div className="mb-3">
-        <label htmlFor="email">Email address</label>
+        <label htmlFor="email">Indirizzo email</label>
         <input
           type="email"
           className="form-control"
           id="email"
-          placeholder="Enter email"
+          placeholder="Inserisci email"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
@@ -44,7 +44,7 @@ function LoginForm(props) {
           type="password"
           className="form-control"
           id="password"
-          placeholder="Enter password"
+          placeholder="Inserisci password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -52,7 +52,7 @@ function LoginForm(props) {
       </div>
       <div className="d-grid">
         <Button type="submit" className="custom-button">
-          Submit
+          Continua
         </Button>
       </div>
     </form>
