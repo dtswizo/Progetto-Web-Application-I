@@ -112,7 +112,7 @@ const Quiz = (props) => {
 
   return (
     <div className='container'>
-      <h1>Gioco dei Memes</h1>
+      <h1>Gioco dei Meme</h1>
       <div className='container-wrapper'>
         <div className='container-domanda'>
           <div className='domanda'>

@@ -53,18 +53,18 @@ const Profile = () => {
 
   return (
     <div className="profile-container">
-      <h2>User Game History</h2>
+      <h2>Cronologia Utente</h2>
       <div className="games-container"> 
         {Object.keys(historyByGame).map((gameId) => (
           <div key={gameId} className="game-row"> 
             <h3>Game ID: {gameId}</h3>
-            <p>Total Score: {historyByGame[gameId][0].total_score}</p>
+            <p>Punteggio totale: {historyByGame[gameId][0].total_score}</p>
             <div className="rounds">
               {historyByGame[gameId].map((round) => (
                 <div key={round.id} className="round">
                   <img src={`http://localhost:3001/resources/${round.meme_img}`} alt="Meme" />
-                  <p>Score: {round.round_score}</p> 
-                  <p>{round.is_correct ? 'Correct' : 'Incorrect'}</p>
+                  <p>Punteggio: {round.round_score}</p> 
+                  <p>{round.is_correct ? 'Corretto' : 'Errato'}</p>
                 </div>
               ))}
             </div>

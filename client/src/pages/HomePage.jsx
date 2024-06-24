@@ -27,19 +27,19 @@ const HomePage = ({ user,logout,loggedIn }) => {
       {loggedIn ? (
         <div className="button-group">
           <Button variant="primary" size="lg" onClick={startGame} className="custom-button">
-            Play
+            Gioca
           </Button>
           <Button variant="secondary" size="lg" onClick={logout} className="custom-button">
             Logout
           </Button>
           <Button variant="primary" size="lg" onClick={goToProfile} className="custom-button">
-            Profile
+            Profilo
           </Button>
         </div>
       ) : (
         <div className="button-group">
           <Button variant="primary" size="lg" onClick={startGame} className="custom-button">
-            Play as a Guest
+            Gioca come ospite
           </Button>
           <Button variant="secondary" size="lg" onClick={login} className="custom-button">
             Login
