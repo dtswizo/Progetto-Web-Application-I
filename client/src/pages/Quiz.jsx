@@ -13,6 +13,7 @@ const Quiz = (props) => {
   const [showPopup, setShowPopup] = useState(false);
   const [summaryData, setSummaryData] = useState([]);
   const [intervalId, setIntervalId] = useState(null);
+  const [isTimerExpired, setIsTimerExpired] = useState(false);
   let firstLoad = false;
   const navigate = useNavigate();
 
@@ -31,7 +32,9 @@ const Quiz = (props) => {
 
   useEffect(() => {
     if (timer === 0) {
-      handleNextClick();
+      setShowPopup(true);
+      setIsTimerExpired(true);
+      if (intervalId) clearInterval(intervalId);
     }
   }, [timer]);
 
@@ -135,7 +138,7 @@ const Quiz = (props) => {
           </div>
         </div>
       </div>
-      <button onClick={handleNextClick} disabled={!isAnswerSelected}>{props.logged ? 'Avanti' : 'Fine'}</button>
+      <button onClick={handleNextClick} disabled={!isAnswerSelected && !isTimerExpired}>{props.logged ? 'Avanti' : 'Fine'}</button>
       <div className="index">
       {props.logged ? `${currentRound} di 3 domande` : '1 di 1 domanda'}
       </div>
