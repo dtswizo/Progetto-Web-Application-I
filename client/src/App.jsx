@@ -27,7 +27,6 @@ function App() {
         setLoading(false);
       }
     };
-
     checkAuth();
   }, []);
 

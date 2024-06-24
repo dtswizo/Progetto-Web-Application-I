@@ -127,7 +127,7 @@ app.get('/api/history', async (req, res) => {
     const data = await fetch_user_data(user_id);
     res.json(data);
   } catch (err) {
-    res.status(500).json({ error: 'An error occurred while fetching meme and captions' });
+    res.status(500).json({ error: 'An error occurred while fetching history' });
   }
 });
 

@@ -5,7 +5,7 @@ import './Profile.css';
 
 const Profile = () => {
   const location = useLocation();
-  const { user } = location.state || {}; // Extract user from location.state
+  const { user } = location.state || {}; 
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -54,16 +54,15 @@ const Profile = () => {
   return (
     <div className="profile-container">
       <h2>User Game History</h2>
-      <div className="games-container"> {/* Nuovo contenitore per lo scorrimento */}
+      <div className="games-container"> 
         {Object.keys(historyByGame).map((gameId) => (
-          <div key={gameId} className="game-row"> {/* Riga per ogni partita */}
+          <div key={gameId} className="game-row"> 
             <h3>Game ID: {gameId}</h3>
             <p>Total Score: {historyByGame[gameId][0].total_score}</p>
             <div className="rounds">
               {historyByGame[gameId].map((round) => (
                 <div key={round.id} className="round">
                   <img src={`http://localhost:3001/resources/${round.meme_img}`} alt="Meme" />
-                  {/* Mostra solo informazioni essenziali per risparmiare spazio */}
                   <p>Score: {round.round_score}</p> 
                   <p>{round.is_correct ? 'Correct' : 'Incorrect'}</p>
                 </div>

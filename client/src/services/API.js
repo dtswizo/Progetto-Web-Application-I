@@ -2,7 +2,7 @@
 const SERVER_URL = 'http://localhost:3001';
 
 
-// NEW
+
 const logIn = async (credentials) => {
   const response = await fetch(SERVER_URL + '/api/sessions', {
     method: 'POST',
@@ -22,7 +22,6 @@ const logIn = async (credentials) => {
   }
 };
 
-// NEW
 const getUserInfo = async () => {
   const response = await fetch(SERVER_URL + '/api/sessions/current', {
     credentials: 'include',
@@ -31,11 +30,11 @@ const getUserInfo = async () => {
   if (response.ok) {
     return user;
   } else {
-    throw user;  // an object with the error coming from the server
+    throw user;  
   }
 };
 
-// NEW
+
 const logOut = async() => {
   const response = await fetch(SERVER_URL + '/api/sessions/current', {
     method: 'DELETE',
@@ -47,25 +46,18 @@ const logOut = async() => {
 
 async function fetchRoundContent(usedMemeIds) {
   const query = `usedMemeIds=${usedMemeIds.join('&')}`;
-  try {
     const response = await fetch(`${SERVER_URL}/api/roundcontent?${query}`, {
       method: 'GET',
       credentials: 'include',
     });
-
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
-
     const data = await response.json();
     return data;
-  } catch (error) {
-    console.error('There was a problem with the fetch operation:', error);
-  }
 }
 
 async function create_game(user_id) {
-  try {
     const response = await fetch(SERVER_URL + '/api/create_game', {
       method: 'POST',
       headers: {
@@ -78,16 +70,11 @@ async function create_game(user_id) {
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
-
     const data = await response.json();
     return data;
-  } catch (error) {
-    console.error('There was a problem with the fetch operation:', error);
-  }
 };
 
 async function add_round(game_id,user_id,meme_img,answer,is_correct) {
-  try {
     const response = await fetch(SERVER_URL + '/api/add_round', {
       method: 'POST',
       headers: {
@@ -103,9 +90,7 @@ async function add_round(game_id,user_id,meme_img,answer,is_correct) {
 
     const data = await response.json();
     return data;
-  } catch (error) {
-    console.error('There was a problem with the fetch operation:', error);
-  }
+ 
 };
 
 async function fetchHistory(user_id) {

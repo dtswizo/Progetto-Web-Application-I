@@ -2,8 +2,9 @@ import { db } from './db.mjs';
 
 
 export const getMemeAndCaption = async (usedMemeIds) => {
-  try {
-    const memeIdsToExclude = usedMemeIds.length ? usedMemeIds.join('&') : '-1';
+    console.log(usedMemeIds);
+    const memeIdsToExclude = usedMemeIds.length ? usedMemeIds.join('&') : '-1'; //così se non c'è nulla di usato non esclude niente
+    console.log(memeIdsToExclude);
     const sqlQuery1 = `SELECT * FROM Memes WHERE id NOT IN (${memeIdsToExclude}) ORDER BY RANDOM() LIMIT 1`;
     const sqlQuery2 = 'SELECT * FROM Captions C, MemeCaptions MC WHERE MC.caption_id = C.id AND MC.meme_id = ? ORDER BY RANDOM() LIMIT 2';
     const sqlQuery3 = 'SELECT * FROM Captions WHERE id NOT IN (SELECT caption_id FROM MemeCaptions MC WHERE MC.meme_id = ?) ORDER BY RANDOM() LIMIT 5';
@@ -37,12 +38,7 @@ export const getMemeAndCaption = async (usedMemeIds) => {
         }
       });
     });
-
     return { meme, rightCaptions: captions, rngCaptions: lastCaptions };
-
-  } catch (err) {
-    throw err;
-  }
 };
 
 export const create_game = async (user_id) => {
