@@ -1,16 +1,14 @@
 import { db } from './db.mjs';
 
 
-export const getMemeAndCaption = async (usedMemeIds) => {
-    console.log(usedMemeIds);
-    const memeIdsToExclude = usedMemeIds.length ? usedMemeIds.join('&') : '-1'; //così se non c'è nulla di usato non esclude niente
-    console.log(memeIdsToExclude);
-    const sqlQuery1 = `SELECT * FROM Memes WHERE id NOT IN (${memeIdsToExclude}) ORDER BY RANDOM() LIMIT 1`;
+export const getMemeAndCaption = async (game_id) => {
+  
+    const sqlQuery1 = `SELECT * FROM Memes WHERE filename NOT IN (SELECT meme_img FROM Round_Data WHERE game_id = ?) ORDER BY RANDOM() LIMIT 1`;
     const sqlQuery2 = 'SELECT * FROM Captions C, MemeCaptions MC WHERE MC.caption_id = C.id AND MC.meme_id = ? ORDER BY RANDOM() LIMIT 2';
     const sqlQuery3 = 'SELECT * FROM Captions WHERE id NOT IN (SELECT caption_id FROM MemeCaptions MC WHERE MC.meme_id = ?) ORDER BY RANDOM() LIMIT 5';
 
     const meme = await new Promise((resolve, reject) => {
-      db.get(sqlQuery1, (err, meme) => {
+      db.get(sqlQuery1, [game_id], (err, meme) => {
         if (err) {
           reject(err);
         } else {
@@ -94,3 +92,4 @@ export const fetch_user_data = async (user_id) => {
     });
   });
 };
+

@@ -44,17 +44,16 @@ const logOut = async() => {
     return null;
 }
 
-async function fetchRoundContent(usedMemeIds) {
-  const query = `usedMemeIds=${usedMemeIds.join('&')}`;
-    const response = await fetch(`${SERVER_URL}/api/roundcontent?${query}`, {
-      method: 'GET',
-      credentials: 'include',
-    });
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const data = await response.json();
-    return data;
+async function fetchRoundContent(game_id) {
+  const response = await fetch(`${SERVER_URL}/api/roundcontent?game_id=${game_id}`, {
+    method: 'GET',
+    credentials: 'include',
+  });
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  const data = await response.json();
+  return data;
 }
 
 async function create_game(user_id) {

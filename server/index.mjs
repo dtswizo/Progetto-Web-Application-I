@@ -86,9 +86,14 @@ app.delete('/api/sessions/current', (req, res) => {
 });
 //MEME-CAPTION API
 app.get('/api/roundcontent', async (req, res) => {
-  const usedMemeIds = req.query.usedMemeIds ? req.query.usedMemeIds.split('&') : [];
+  const gameId = req.query.game_id;
+
+  if (!gameId) {
+    return res.status(400).json({ error: 'game_id is required' });
+  }
+
   try {
-    const data = await getMemeAndCaption(usedMemeIds);
+    const data = await getMemeAndCaption(gameId);
     res.json(data);
   } catch (err) {
     res.status(500).json({ error: 'An error occurred while fetching meme and captions' });
