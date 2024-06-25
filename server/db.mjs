@@ -6,16 +6,16 @@ export const db = new sqlite.Database('memedb.db', (err) => {
 });
 
 db.serialize(() => {
-  /*
+  
   db.run(`
-    CREATE TABLE IF NOT EXISTS Users (
+    CREATE TABLE IF NOT EXISTS user (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      username TEXT NOT NULL,
-      password_hash TEXT NOT NULL,
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      email TEXT NOT NULL,
+      name TEXT NOT NULL,
+      hash TEXT NOT NULL,
+      salt TEXT NOT NULL
     )
   `);
-*/
   db.run(`
     CREATE TABLE IF NOT EXISTS Game_Matches (
       game_id INTEGER PRIMARY KEY AUTOINCREMENT,

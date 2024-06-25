@@ -73,7 +73,7 @@ app.post('/api/sessions', function (req, res, next) {
 
 app.get('/api/sessions/current', (req, res) => {
   if (req.isAuthenticated()) {
-    res.json(req.user);
+    res.status(200).json(req.user);
   } else {
     res.status(401).json({ error: 'Not authenticated' });
   }
@@ -84,6 +84,8 @@ app.delete('/api/sessions/current', (req, res) => {
     res.end();
   });
 });
+
+
 //MEME-CAPTION API
 app.get('/api/roundcontent', async (req, res) => {
   const gameId = req.query.game_id;
@@ -94,9 +96,9 @@ app.get('/api/roundcontent', async (req, res) => {
 
   try {
     const data = await getMemeAndCaption(gameId);
-    res.json(data);
+    res.status(200).json(data);
   } catch (err) {
-    res.status(500).json({ error: 'An error occurred while fetching meme and captions' });
+    res.status(500).json({ error: 'Server Error' });
   }
 });
 
@@ -106,7 +108,7 @@ app.post('/api/create_game', async (req, res) => {
     const result = await create_game(user_id);
     res.status(201).json({ success: true, game_id: result});
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    res.status(500).json({ error: 'Server Error' });
   }
 });
 
@@ -122,7 +124,7 @@ app.post('/api/add_round', async (req, res) => {
     const result = await add_round(game_id,user_id,meme_img,answer,is_correct);
     res.status(201).json({success: true});
   } catch (error) {
-    res.status(500).json({success: false, error: error.message });
+    res.status(500).json({ error: 'Server Error' });
   }
 });
 
@@ -130,9 +132,10 @@ app.get('/api/history', async (req, res) => {
   const user_id = req.query.user_id; 
   try {
     const data = await fetch_user_data(user_id);
-    res.json(data);
+    console.log(data);
+    res.status(200).json(data);
   } catch (err) {
-    res.status(500).json({ error: 'An error occurred while fetching history' });
+    res.status(500).json({ error: 'Server Error' });
   }
 });
 
@@ -140,9 +143,9 @@ app.patch('/api/update_score', async (req, res) => {
   const { score, game_id } = req.body;
   try {
     const result = await update_score(score, game_id);
-    res.status(201).json({success: true});
+    res.status(200).json({success: true});
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: 'Server Error' });
   }
 });
 

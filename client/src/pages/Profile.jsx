@@ -40,13 +40,18 @@ const Profile = () => {
   }
 
   const groupByGameId = (data) => {
-    return data.reduce((acc, curr) => {
-      if (!acc[curr.game_id]) {
-        acc[curr.game_id] = [];
+    const games = [];
+    const gameMap = {};
+
+    data.forEach((round) => {
+      if (!gameMap[round.game_id]) {
+        gameMap[round.game_id] = [];
+        games.push({ game_id: round.game_id, rounds: gameMap[round.game_id] });
       }
-      acc[curr.game_id].push(curr);
-      return acc;
-    }, {});
+      gameMap[round.game_id].push(round);
+    });
+
+    return games;
   };
 
   const historyByGame = groupByGameId(history);
@@ -55,12 +60,12 @@ const Profile = () => {
     <div className="profile-container">
       <h2>Cronologia Utente</h2>
       <div className="games-container"> 
-        {Object.keys(historyByGame).map((gameId) => (
-          <div key={gameId} className="game-row"> 
-            <h3>Game ID: {gameId}</h3>
-            <p>Punteggio totale: {historyByGame[gameId][0].total_score}</p>
+        {historyByGame.map((game, index) => (
+          <div key={game.game_id} className="game-row"> 
+            <h3>Partita #{index + 1}</h3>
+            <p>Punteggio totale: {game.rounds[0].total_score}</p>
             <div className="rounds">
-              {historyByGame[gameId].map((round) => (
+              {game.rounds.map((round) => (
                 <div key={round.id} className="round">
                   <img src={`http://localhost:3001/resources/${round.meme_img}`} alt="Meme" />
                   <p>Punteggio: {round.round_score}</p> 

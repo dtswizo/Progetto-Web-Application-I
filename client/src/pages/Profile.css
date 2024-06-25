@@ -6,6 +6,7 @@
     color: #333;
     max-height: 80vh;      
     overflow-y: auto;      
+    scrollbar-width: none; 
   }
   
   h2 {
