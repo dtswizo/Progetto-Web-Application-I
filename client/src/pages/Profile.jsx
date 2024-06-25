@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation,useNavigate } from 'react-router-dom';
 import API from '../services/API';
 import './Profile.css';
 
@@ -9,6 +9,7 @@ const Profile = () => {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!user) return;
@@ -76,7 +77,9 @@ const Profile = () => {
           </div>
         ))}
       </div>
+      <button className="home-button" onClick={() => navigate("/")}>Torna alla Home</button>
     </div>
+    
   );
 };
 
