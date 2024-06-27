@@ -12,10 +12,6 @@
 - - Route `*`: default route, contains an error 404 page.
 
 ## API Server
-MIDDLEWARE
--isAuthenticated: check if the request cames from an authenticated user, if not return error 401
-
-API
 
 - POST `/api/sessions`
   - request Parameters: none
@@ -40,32 +36,32 @@ API
   - request body content: none
   - response body content: return 200 with { meme: { id: x, filename: 'x.jpg' }, rightCaptions: [{ id: x, text: 'example', meme_id: x,caption_id: x }],
     rngCaptions: [ { id: x, text: 'example'}]}
-  - return 500 in case of server errors
+  - return 500 in case of server errors 
   
 - POST `/api/create_game`
   - request Parameters: none
   - request body content: { user_id }
   - response body content: return 201 with { success, game_id }
-  - return 500 in case of server errors
+  - return 500 in case of server errors or 422 for input errors
    
   
 - POST `/api/add_round`
   - request Parameters: none
   - request body content: { game_id, user_id, meme_img, answer, is_correct}
   - response body content: return 201 with { success }
-  - return 500 in case of server errors
+  - return 500 in case of server errors or 422 for input errors
 
 - GET `/api/history?user_id=${user_id}`
   - request Parameters: { user_id }
   - request body content: none
   - response body content: return 200 with [{ game_id, total_score, meme_img, answer, is_correct, round_score }]
-  - return 500 in case of server errors
+  - return 500 in case of server errors 
    
 - PATCH `/api/update_score`
   - request Parameters: none
   - request body content: { score, game_id}
   - response body content: return 200 with { success }
-  - return 500 in case of server errors
+  - return 500 in case of server errors or 422 for input errors
 ## Database Tables
 
 - Table `user` - contains a wow for each user, attributes are:
@@ -125,6 +121,7 @@ API
 ## Screenshot
 
 ![Screenshot](./img/Screenshot1.png)
+
 ![Screenshot](./img/Screenshot2.png)
 
 

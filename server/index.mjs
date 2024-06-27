@@ -1,8 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-import fs from 'fs';
-import path from 'path';
 import session from 'express-session';
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
@@ -55,6 +53,14 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+const isLoggedIn = (req, res, next) => {
+  if(req.isAuthenticated()) {
+    return next();
+  }
+  return res.status(401).json({error: 'Not authorized'});
+}
+
+
 
 
 //PASSPORT API
@@ -101,7 +107,7 @@ app.get('/api/roundcontent', async (req, res) => {
   }
 });
 
-app.post('/api/create_game', async (req, res) => {
+app.post('/api/create_game', isLoggedIn, async (req, res) => {
   const { user_id } = req.body;
   if (!Number.isInteger(user_id)) {
     return res.status(422).json({ error: 'user_id must be integer' });
@@ -114,7 +120,7 @@ app.post('/api/create_game', async (req, res) => {
   }
 });
 
-app.post('/api/add_round', async (req, res) => {
+app.post('/api/add_round', isLoggedIn, async (req, res) => {
   const { game_id } = req.body;
   const { user_id } = req.body;
   const { meme_img } = req.body;
@@ -142,7 +148,7 @@ app.post('/api/add_round', async (req, res) => {
   }
 });
 
-app.get('/api/history', async (req, res) => {
+app.get('/api/history', isLoggedIn, async (req, res) => {
   const user_id = req.query.user_id; 
   try {
     const data = await fetch_user_data(user_id);
@@ -152,7 +158,7 @@ app.get('/api/history', async (req, res) => {
   }
 });
 
-app.patch('/api/update_score', async (req, res) => {
+app.patch('/api/update_score',  isLoggedIn, async (req, res) => {
   const { score, game_id } = req.body;
   if (!Number.isInteger(score) || !Number.isInteger(game_id)) {
     return res.status(422).json({ error: 'score e game_id must be integer' });
