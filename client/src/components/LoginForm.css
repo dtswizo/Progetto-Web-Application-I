@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap'); 
+
+.login-form {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .login-form .form-control {
+    border-radius: 5px;
+  }
+  
+  .login-form .btn {
+    border-radius: 5px;
+  }
+  
+  .login-form .card {
+    border: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  

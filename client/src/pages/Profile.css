@@ -1,0 +1,89 @@
+
+.profile-container {
+    max-width: 960px;
+    margin: 20px auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    color: #333;
+    max-height: 80vh;      
+    overflow-y: auto;      
+    scrollbar-width: none; 
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2em; 
+  }
+  
+  .games-container {
+    display: flex;
+    flex-direction: column; 
+    gap: 20px;             
+  }
+  
+  
+  .game-row {
+    border: 1px solid #ddd;
+    border-radius: 8px;    
+    padding: 20px;
+    background-color: #fff; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .game-row h3 {
+    margin: 0 0 10px 0;  
+    font-size: 1.2em;     
+    color: #007bff;   
+  }
+  
+  .rounds {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;           
+  }
+  
+  .round {
+    width: 120px;        
+    height: 180px;        
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #f5f5f5; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    transition: transform 0.2s ease;
+  }
+  
+  .round:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); 
+  }
+  
+  .round img {
+    max-width: 100%;
+    height: 80px;         
+    object-fit: cover;   
+    border-radius: 5px;  
+    margin-bottom: 10px; 
+  }
+  
+  .round p {
+    font-size: 0.9em;     
+    margin: 5px 0; 
+  }
+  
+
+  
+  .home-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+  }
