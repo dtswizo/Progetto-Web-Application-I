@@ -63,7 +63,7 @@ export const add_round = async (game_id, user_id, meme_img, answer, is_correct) 
   });
 };
 
-export const fetch_user_data = async (user_id) => {
+export const fetch_user_data = async (user_id) => { //restituisce tutti i dati necessari (partite e round dell'utente)
   const sql = `
     SELECT 
       gm.game_id,

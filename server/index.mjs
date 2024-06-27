@@ -89,9 +89,8 @@ app.delete('/api/sessions/current', (req, res) => {
 //MEME-CAPTION API
 app.get('/api/roundcontent', async (req, res) => {
   const gameId = req.query.game_id;
-
   if (!gameId) {
-    return res.status(400).json({ error: 'game_id is required' });
+    return res.status(422).json({ error: 'game_id is required' });
   }
 
   try {
@@ -104,6 +103,9 @@ app.get('/api/roundcontent', async (req, res) => {
 
 app.post('/api/create_game', async (req, res) => {
   const { user_id } = req.body;
+  if (!Number.isInteger(user_id)) {
+    return res.status(422).json({ error: 'user_id must be integer' });
+  }
   try {
     const result = await create_game(user_id);
     res.status(201).json({ success: true, game_id: result});
@@ -118,8 +120,20 @@ app.post('/api/add_round', async (req, res) => {
   const { meme_img } = req.body;
   const { answer } = req.body;
   const { is_correct} = req.body;
+  if (!Number.isInteger(game_id) || !Number.isInteger(user_id)) {
+    return res.status(422).json({ error: 'user_id and game_id must be integer' });
+  }
+  if (typeof is_correct !== 'boolean') {
+    return res.status(422).json({ error: 'Invalid is_correct: Must be a boolean (true or false).' });
+  }
+  if (typeof meme_img !== 'string' || meme_img.trim() === '') {
+    return res.status(422).json({ error: 'Invalid meme_img: Must be a non-empty string.' });
+  }
 
-  
+  if (typeof answer !== 'string' || answer.trim() === '') {
+    return res.status(422).json({ error: 'Invalid answer: Must be a non-empty string.' });
+  }
+
   try {
     const result = await add_round(game_id,user_id,meme_img,answer,is_correct);
     res.status(201).json({success: true});
@@ -132,7 +146,6 @@ app.get('/api/history', async (req, res) => {
   const user_id = req.query.user_id; 
   try {
     const data = await fetch_user_data(user_id);
-    console.log(data);
     res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ error: 'Server Error' });
@@ -141,6 +154,9 @@ app.get('/api/history', async (req, res) => {
 
 app.patch('/api/update_score', async (req, res) => {
   const { score, game_id } = req.body;
+  if (!Number.isInteger(score) || !Number.isInteger(game_id)) {
+    return res.status(422).json({ error: 'score e game_id must be integer' });
+  }
   try {
     const result = await update_score(score, game_id);
     res.status(200).json({success: true});

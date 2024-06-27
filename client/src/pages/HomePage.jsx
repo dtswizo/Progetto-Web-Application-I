@@ -20,7 +20,7 @@ const HomePage = ({ user,logout,loggedIn }) => {
   };
 
 
-
+//Gestione bottoni per Ospite e per Utente Loggato
   return (
     <div className="homepage-container">
       <img src={photoBg} alt="Background" />

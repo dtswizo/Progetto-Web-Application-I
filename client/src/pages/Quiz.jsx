@@ -4,22 +4,22 @@ import "./Quiz.css";
 import API from '../services/API';
 
 const Quiz = (props) => {
-  const [matchId, setMatchId] = useState(-1);
-  const [roundContent, setRoundContent] = useState(null);
-  const [error, setError] = useState(null);
-  const [currentRound, setCurrentRound] = useState(1);
-  const [isAnswerSelected, setIsAnswerSelected] = useState(false);
-  const [timer, setTimer] = useState(30);
-  const [showPopup, setShowPopup] = useState(false);
-  const [summaryData, setSummaryData] = useState([]);
-  const [intervalId, setIntervalId] = useState(null);
+  const [matchId, setMatchId] = useState(-1); //ID partita, di default è -1, ciò mi permette di gestire anche l'ospite
+  const [roundContent, setRoundContent] = useState(null); //contenuto del round (memes e didascalie)
+  const [error, setError] = useState(null); //errore chiamate API
+  const [currentRound, setCurrentRound] = useState(1); //Contatore round
+  const [isAnswerSelected, setIsAnswerSelected] = useState(false); //Permette di capire se una risposta è stata selezionata o meno 
+  const [timer, setTimer] = useState(30); //Timer del round
+  const [showPopup, setShowPopup] = useState(false); //popup in grado di mostrare le risposte corrette (se l'utente seleziona la risposta sbagliata)
+  const [summaryData, setSummaryData] = useState([]); //buffer locale che salva solo le risposte corrette (serve per il riepilogo) 
+  const [intervalId, setIntervalId] = useState(null);//serve per la gestione del timer e garantire che ci sia solo un timer attivo contemporaneamente
   const [isTimerExpired, setIsTimerExpired] = useState(false);
-  let firstLoad = false;
+  let firstLoad = false; //variabile utilizzata per gestire per il double rendering
   const navigate = useNavigate();
 
 
   useEffect(() => {
-    if (firstLoad === false) {
+    if (firstLoad === false) {  //risolvo il problema del doppio rendering che si verifica al montaggio del componente
       loadRoundContent();
       resetTimer();
       firstLoad = true;
@@ -28,7 +28,7 @@ const Quiz = (props) => {
       };
     }
     firstLoad = false;
-  }, [currentRound]);
+  }, [currentRound]); //rendering ogni volta che viene cambiamento il round
 
   useEffect(() => {
     if (timer === 0) {
@@ -39,7 +39,7 @@ const Quiz = (props) => {
   }, [timer]);
 
   const loadRoundContent = async () => {
-    if (currentRound === 1 && props.logged) {
+    if (currentRound === 1 && props.logged) { //gestione utente registrati
       const res = await API.create_game(props.user.id);
       setMatchId(res.game_id);
     }
@@ -47,7 +47,7 @@ const Quiz = (props) => {
       const data = await API.fetchRoundContent(matchId);
       if (data) {
         const { meme,rightCaptions, rngCaptions } = data;
-        const shuffledCaptions = [...rightCaptions, ...rngCaptions].sort(() => Math.random() - 0.5);
+        const shuffledCaptions = [...rightCaptions, ...rngCaptions].sort(() => Math.random() - 0.5); //mescolo per non avere le risposte giuste sempre allo stesso posto
         setRoundContent({ ...data, captions: shuffledCaptions });  
       }
     } catch (error) {
@@ -58,19 +58,19 @@ const Quiz = (props) => {
   const resetTimer = () => {
     if (intervalId) clearInterval(intervalId);
     setTimer(30);
-    const id = setInterval(() => {
-      setTimer(prevTimer => prevTimer - 1);
+    const id = setInterval(() => {  //ID univoco timer
+      setTimer(prevTimer => prevTimer - 1);  //ogni secondo il timer viene diminuito di 1 secondo
     }, 1000);
     setIntervalId(id);
   };
 
-  const handleCaptionClick = async (event, caption) => {
+  const handleCaptionClick = async (event, caption) => { //Gestione selezione risposta
     firstLoad = false;
-    if (isAnswerSelected) return;
+    if (isAnswerSelected) return; //se è già stata cliccata una risposta non fare nulla
     if (intervalId) clearInterval(intervalId);
     const isCorrect = roundContent.rightCaptions.some(rc => rc.id === caption.id); //controllo se la risposta è giusta
     if (isCorrect) {
-      event.target.classList.add('correct');
+      event.target.classList.add('correct'); //aggiungo il css "verde"
       setSummaryData(prevSummaryData => [   //buffer locale per salvare le risposte giuste e i meme
         ...prevSummaryData,
         {
@@ -80,16 +80,16 @@ const Quiz = (props) => {
       ]);
     }
     else {
-      event.target.classList.add('wrong');
+      event.target.classList.add('wrong'); //aggiungo il css "rosso"
       setShowPopup(true); //se la risposta è errata devo mostrare il popup con le risposte giuste
     }
     setIsAnswerSelected(true);
-    await API.add_round(matchId, props.user.id, roundContent.meme.filename, caption.text, isCorrect);//aggiungere try/catch? 
+    await API.add_round(matchId, props.user.id, roundContent.meme.filename, caption.text, isCorrect);
   };
 
-  const handleNextClick = async () => {
+  const handleNextClick = async () => { //gestisce il click successivo a quello della selezione della risposta
     if(props.logged===false)
-      navigate("/"); //se sta giocando un guest dopo il primo round viene mandato alla home
+      navigate("/"); //se sta giocando un ospite dopo il primo round viene mandato alla home
     document.querySelectorAll('.risposte li').forEach(element => {
       element.classList.remove('correct', 'wrong');
     });  //resetto il css dalle risposte ogni fine round
@@ -97,18 +97,18 @@ const Quiz = (props) => {
       setCurrentRound(currentRound + 1);
       setIsAnswerSelected(false);
     } else {
-      await API.updateScore(summaryData.length*5,matchId);
+      await API.updateScore(summaryData.length*5,matchId); //se la partità è finita aggiorno il punteggio e indirizzo l'utente al riepilogo partita
       navigate('/summary', { state: { summaryData } });
-      if (intervalId) clearInterval(intervalId);
+      if (intervalId) clearInterval(intervalId);  //stop del timer
     }
   };
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div>Errore</div>;  //se non è ancora stato caricato il contenuto del round mostra la scritta
   }
 
   if (!roundContent) {
-    return <div>Loading...</div>;
+    return <div>Caricamento in corso...</div>;  //se non è ancora stato caricato il contenuto del round mostra la scritta
   }
 
   const { meme, captions } = roundContent;
@@ -138,7 +138,7 @@ const Quiz = (props) => {
           </div>
         </div>
       </div>
-      <button onClick={handleNextClick} disabled={!isAnswerSelected && !isTimerExpired}>{props.logged ? 'Avanti' : 'Fine'}</button>
+      <button onClick={handleNextClick} disabled={!isAnswerSelected && !isTimerExpired}>{props.logged ? 'Avanti' : 'Fine'}</button> 
       <div className="index">
       {props.logged ? `${currentRound} di 3 domande` : '1 di 1 domanda'}
       </div>

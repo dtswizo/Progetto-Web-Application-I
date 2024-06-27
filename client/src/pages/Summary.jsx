@@ -4,7 +4,7 @@ import "./Summary.css";
 
 const Summary = () => {
   const location = useLocation();
-  const { state } = location;
+  const { state } = location; //permette di passare dati tramite la useLocation
 
   if (!state || !state.summaryData) {
     // Gestione del caso in cui non ci siano dati di riepilogo

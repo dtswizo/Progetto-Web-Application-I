@@ -18,8 +18,10 @@ function App() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
+        if(user!=null){
         const currentUser = await API.getUserInfo();
         setUser(currentUser);
+        }
       } catch (err) {
         console.error(err);
       } finally {

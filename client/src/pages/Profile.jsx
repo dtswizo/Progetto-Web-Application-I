@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation,useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import API from '../services/API';
 import './Profile.css';
 
@@ -29,18 +29,18 @@ const Profile = () => {
   }, [user]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>Caricamento in corso...</div>;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div>Errore: {error}</div>;
   }
 
   if (!user) {
-    return <div>No user data available</div>;
+    return <div>Non sono disponibili dati per l'utente</div>;
   }
 
-  const groupByGameId = (data) => {
+  const groupByGameId = (data) => { //serve a raggruppare i round per ID partita
     const games = [];
     const gameMap = {};
 
@@ -49,7 +49,7 @@ const Profile = () => {
         gameMap[round.game_id] = [];
         games.push({ game_id: round.game_id, rounds: gameMap[round.game_id] });
       }
-      gameMap[round.game_id].push(round);
+      gameMap[round.game_id].push(round); //aggiunta round all'array dei round per questo GAME_ID
     });
 
     return games;
@@ -63,7 +63,7 @@ const Profile = () => {
       <div className="games-container"> 
         {historyByGame.map((game, index) => (
           <div key={game.game_id} className="game-row"> 
-            <h3>Partita #{index + 1}</h3>
+            <h3>Partita {index + 1}</h3>
             <p>Punteggio totale: {game.rounds[0].total_score}</p>
             <div className="rounds">
               {game.rounds.map((round) => (
