@@ -18,7 +18,7 @@ app.use(morgan('dev'));
 // Mi permette di accedere alle foto con http://localhost:3001/resources/x.jpg
 app.use('/resources', express.static("resources"));
 
-// CORS configuration
+// Configurazione CORS
 const corsOptions = {
   origin: 'http://localhost:5173',
   optionsSuccessStatus: 200,
@@ -26,7 +26,7 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-// Passport configuration
+// Configurazione Passport
 passport.use(new LocalStrategy(async function verify(username, password, cb) {
   try {
     const user = await getUser(username, password);
@@ -48,7 +48,7 @@ passport.deserializeUser(function (user, cb) {
 });
 
 app.use(session({
-  secret: "cambiato",
+  secret: "cambiato il secret",
   resave: false,
   saveUninitialized: false,
 }));
@@ -150,7 +150,7 @@ app.patch('/api/update_score', async (req, res) => {
 });
 
 
-// Start the server
+// Fa partire il server
 app.listen(port, () => {
   console.log(`API server started at http://localhost:${port}`);
 });

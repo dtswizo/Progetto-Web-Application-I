@@ -81,7 +81,6 @@ export const fetch_user_data = async (user_id) => {
     ORDER BY 
       gm.game_id, rd.id
   `;
-
   return new Promise((resolve, reject) => {
     db.all(sql, [user_id], (err, user_data) => {
       if (err) {

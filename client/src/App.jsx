@@ -5,7 +5,6 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import NotFound from './pages/NotFound';
 import API from './services/API';
-import './App.css'; 
 import Quiz from './pages/Quiz';
 import Profile from './pages/Profile';
 import Summary from './pages/Summary';
@@ -34,7 +33,7 @@ function App() {
     try {
       const user = await API.logIn(credentials);
       setLoggedIn(true);
-      setMessage({msg: `Welcome, ${user.name}!`, type: 'success'});
+      setMessage({msg: `Benvenuto, ${user.name}!`, type: 'success'});
       setUser(user);
     } catch(err) {
       setMessage({msg: "Username o password errati", type: 'danger'});
@@ -45,11 +44,11 @@ function App() {
     await API.logOut();
     setLoggedIn(false);
     setUser(null);
-    setMessage({msg: 'Logged out successfully', type: 'success'}); 
+    setMessage({msg: 'Logout avvenuto con successo', type: 'success'}); 
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>Caricamento in corso...</div>;
   }
 
   return (
@@ -57,7 +56,7 @@ function App() {
       <Route path="/" element={<HomePage loggedIn={loggedIn} user={user} logout={handleLogout} />} />
       <Route path="/game" element={<Quiz user={user} logged={loggedIn}/>} />
       <Route path='/login' element={
-        loggedIn ? <Navigate replace to='/' /> : <LoginPage login={handleLogin} message={message} setMessage={setMessage} />
+        loggedIn ? <Navigate replace to='/' /> : <LoginPage login={handleLogin} message={message} setMessage={setMessage} /> //tasti variano se l'utente è loggato  o meno
       } />
        <Route path="/summary" element={<Summary/>} />
        <Route path="/profile" element={<Profile />} /> 

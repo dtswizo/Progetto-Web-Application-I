@@ -50,7 +50,7 @@ async function fetchRoundContent(game_id) {
     credentials: 'include',
   });
   if (!response.ok) {
-    throw new Error('Network response was not ok');
+    throw new Error('Errore API fetchRoundContent');
   }
   const data = await response.json();
   return data;
@@ -67,7 +67,7 @@ async function create_game(user_id) {
     });
 
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      throw new Error('Errore API create_game');
     }
     const data = await response.json();
     return data;
@@ -84,7 +84,7 @@ async function add_round(game_id,user_id,meme_img,answer,is_correct) {
     });
 
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      throw new Error('Errore API add_round');
     }
 
     const data = await response.json();
@@ -93,7 +93,6 @@ async function add_round(game_id,user_id,meme_img,answer,is_correct) {
 };
 
 async function fetchHistory(user_id) {
-  try {
     const response = await fetch(`${SERVER_URL}/api/history?user_id=${user_id}`, {
       method: 'GET',
       headers: {
@@ -103,15 +102,11 @@ async function fetchHistory(user_id) {
     });
 
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      throw new Error('Errore API fetchHistory');
     }
 
     const data = await response.json();
     return data;
-  } catch (error) {
-    console.error('There was a problem with the fetch operation:', error);
-    throw error;
-  }
 }
 
 async function updateScore(score, game_id) {
@@ -125,7 +120,7 @@ async function updateScore(score, game_id) {
   });
 
   if (!response.ok) {
-    throw new Error('Network response was not ok');
+    throw new Error('Errore API updateScore');
   }
 
   const data = await response.json();

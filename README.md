@@ -124,9 +124,11 @@ API
 
 ## Screenshot
 
-![Screenshot](./img/screenshot.jpg)
+![Screenshot](./img/Screenshot1.png)
+![Screenshot](./img/Screenshot2.png)
+
 
 ## Users Credentials
 
-- username, password (plus any other requested info)
-- username, password (plus any other requested info)
+- username: davide@polito.it, password: test (user with games in his history) 
+- username: test@polito.it, password:test (new empty account)

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import './HomePage.css'; // Import the CSS file
+import './HomePage.css'; 
 import photoBg from '../resources/bg2.jpg';
 
 const HomePage = ({ user,logout,loggedIn }) => {

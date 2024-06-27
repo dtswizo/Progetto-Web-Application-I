@@ -1,6 +1,6 @@
 import sqlite from 'sqlite3';
 
-// open the database
+// apertura db
 export const db = new sqlite.Database('memedb.db', (err) => {
   if (err) throw err;
 });

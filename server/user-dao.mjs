@@ -10,10 +10,7 @@ export const getUser = (email, password) => {
       } else if (row === undefined) {
         resolve(false);
       } else {
-        // Log the row to check its contents
-        console.log('Retrieved row:', row);
-        
-        // Check if the hash and salt fields are present
+        //console.log('Retrieved row:', row);
         if (!row.hash || !row.salt) {
           reject(new Error('Password or salt is missing from the database row'));
           return;
