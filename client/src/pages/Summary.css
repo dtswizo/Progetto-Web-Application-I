@@ -9,6 +9,9 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     background-color: #f9f9f9;
+    overflow-y: auto;
+    scrollbar-width: none;
+    max-height: 80vh;
   }
   
  
